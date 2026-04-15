@@ -9,3 +9,6 @@ Run Ubuntu24 arm version On Android, you can use this app.
 - ls,cd,free,df,tree and many others command √
 - apt install √
 - nload X cause segmentation fault.
+
+## build
+- use Termux 0.119 to build this app
