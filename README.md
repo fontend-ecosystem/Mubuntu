@@ -13,4 +13,12 @@ Run Ubuntu24 arm version On Android, you can use this app.
 - nload √  previously cause segmentation fault.
 
 ## build
-- use Termux 0.119 to build this app
+use Termux 0.119 to build this app
+- openjdk17
+- gradle
+- android sdk34
+- aapt2
+- zlipalign
+- d8.jar
+- apksigner.jar
+- termux-open
