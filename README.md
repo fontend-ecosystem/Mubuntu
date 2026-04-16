@@ -8,6 +8,7 @@ Run Ubuntu24 arm version On Android, you can use this app.
 ## features
 - ls,cd,free,df,tree and many others command √
 - apt install python3 nodejs node golang gcc √
+- codex √
 - others： need more testing.
 
 ## build
