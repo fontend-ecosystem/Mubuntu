@@ -10,9 +10,6 @@ Run Ubuntu24 arm version On Android, you can use this app.
 - apt install python3 nodejs node golang gcc √
 - others： need more testing.
 
-## fixed
-- nload √  previously cause segmentation fault.
-
 ## build
 use Termux 0.119 to build this app
 - openjdk17
