@@ -1,0 +1,115 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.ubuntu4m.app'
+    compileSdk 34
+    buildToolsVersion "34.0.0"
+
+    signingConfigs {
+        release {
+            storeFile file('../build/release.keystore')
+            storePassword 'android'
+            keyAlias 'release'
+            keyPassword 'android'
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.ubuntu4m.app"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging true
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile '../AndroidManifest.xml'
+            java.srcDirs = ['../java']
+            res.srcDirs = ['../res']
+            assets.srcDirs = ['../assets']
+            jniLibs.srcDirs = ['src/main/jniLibs']
+            resources.srcDirs = []
+        }
+    }
+}
+
+dependencies {
+}
+
+def debugApkOutput = file("$buildDir/outputs/apk/debug/app-debug.apk")
+def publicDebugApk = file("/data/data/com.termux/files/home/storage/downloads/ubuntu4m-debug.apk")
+def releaseApkOutput = file("$buildDir/outputs/apk/release/app-release.apk")
+def publicReleaseApk = file("/data/data/com.termux/files/home/storage/downloads/Mubuntu-release.apk")
+def termuxOpenExecutable = "/data/data/com.termux/files/usr/bin/termux-open"
+
+tasks.matching { it.name == "assembleDebug" }.configureEach {
+    doLast {
+        if (!debugApkOutput.exists()) {
+            throw new GradleException("Debug APK not found: ${debugApkOutput}")
+        }
+
+        publicDebugApk.parentFile.mkdirs()
+        copy {
+            from debugApkOutput
+            into publicDebugApk.parentFile
+            rename { publicDebugApk.name }
+        }
+
+        def process = new ProcessBuilder(
+                termuxOpenExecutable,
+                "--content-type",
+                "application/vnd.android.package-archive",
+                publicDebugApk.absolutePath
+        ).start()
+
+        int exitCode = process.waitFor()
+        if (exitCode != 0) {
+            throw new GradleException("termux-open failed with exit code ${exitCode}")
+        }
+    }
+}
+
+tasks.matching { it.name == "assembleRelease" }.configureEach {
+    doLast {
+        if (!releaseApkOutput.exists()) {
+            throw new GradleException("Release APK not found: ${releaseApkOutput}")
+        }
+
+        publicReleaseApk.parentFile.mkdirs()
+        copy {
+            from releaseApkOutput
+            into publicReleaseApk.parentFile
+            rename { publicReleaseApk.name }
+        }
+    }
+}

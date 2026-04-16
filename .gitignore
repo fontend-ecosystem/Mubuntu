@@ -1,0 +1,29 @@
+# Gradle and Android build outputs
+/.gradle/
+/app/build/
+/build/
+/.cxx/
+/.externalNativeBuild/
+/local.properties
+
+# Local downloads, experiments, and packaged artifacts
+/downloads/
+/ubuntu4m-release-latest.apk
+*.idsig
+*.log
+
+# Signing material should stay out of version control
+*.jks
+*.keystore
+
+# Large runtime payloads are managed outside Git
+/assets/ubuntu-rootfs/*.tar
+/assets/ubuntu-rootfs/*.tar.*
+/assets/ubuntu-rootfs/*.img
+
+# Local SDK/framework artifacts used outside the Gradle build
+/libs/
+
+# Editor/system noise
+.DS_Store
+Thumbs.db
