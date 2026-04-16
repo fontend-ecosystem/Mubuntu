@@ -7,7 +7,7 @@ Run Ubuntu24 arm version On Android, you can use this app.
 
 ## features
 - ls,cd,free,df,tree and many others command √
-- apt install √
+- apt install python3 nodejs node golang gcc √
 
 ## fixed
 - nload √  previously cause segmentation fault.
